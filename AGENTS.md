@@ -21,6 +21,7 @@ The exercise brief is in the repo root as `idempotent-serial-tracker 1.md`.
 - Update `AGENT_FILES/HANDOFF.md` at the end of each working session **and** after each meaningful turn.
 - **Keep a running log of every operator prompt and assistant response in `AGENT_FILES/HANDOFF.md`; this is the raw source for `LLM-BRIEF.md` and must persist across sessions. Record the local timestamp, elapsed time since the activity start (13:58 CST), and the AI model/assistant identifier used for each response.**
 - **Do not run `git commit` or `git push` unless the operator uses explicit words such as "commit and push", "upload this to the server", or similar. Do not infer commit/push permission from general go-ahead wording.**
+- **Because `AGENT_FILES/HANDOFF.md` is updated after every turn, do not execute a "commit and push" until the operator has explicitly accepted the latest `HANDOFF.md` changes. This prevents an infinite commit/push → HANDOFF update loop.**
 - Update `AGENT_FILES/MEMORY.md` only for decisions, constraints, or discoveries worth preserving.
 - This project does **not** use Jira tracking; do not create `AGENT_FILES/JIRA/` or Jira files unless explicitly asked.
 - Enforce the invariants in `idempotent-serial-tracker 1.md`:

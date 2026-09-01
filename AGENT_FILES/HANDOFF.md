@@ -502,6 +502,46 @@ Updated `LLM-BRIEF.md` with a "Full prompt/response history" section pointing to
 
 - `README.md` and `LLM-BRIEF.md` updated with requested cross-references.
 - Working tree has uncommitted changes.
+---
+
+**Prompt 29** — *2026-09-01 15:05:15 CST, elapsed ~67 min*
+> Commit and push this last changes.
+
+**Response 29** — *2026-09-01 15:05:50 CST, elapsed ~68 min; AI: SWE-1.7 Medium (Devin)*
+Committed and pushed the final changes:
+
+- `README.md` — user edits + "Project agent files" section.
+- `LLM-BRIEF.md` — "Full prompt/response history" section pointing to
+  `AGENT_FILES/HANDOFF.md`.
+- `AGENT_FILES/HANDOFF.md` — updated transcript.
+
+```
+[main 4b8c6d1] docs: update README and LLM-BRIEF with agent file cross-references
+   20b08eb..4b8c6d1  main -> main
+```
+
+### Current status
+
+- All changes committed and pushed.
+- Repository at `origin/main` is up to date.
+- Exercise complete.
+---
+
+**Prompt 30** — *2026-09-01 15:06:40 CST, elapsed ~69 min*
+> Whenever, in this repository, I say "commit and push", only do it after I
+> accepted the last changes for the HANDOFF file, otherwise it will fall into an
+> infinite loop of commiting+pushing -> modifying HANDOFF file ->
+> commiting+pushing -> modifying HANDOFF file and so on.
+
+**Response 30** — *2026-09-01 15:07:17 CST, elapsed ~70 min; AI: SWE-1.7 Medium (Devin)*
+Acknowledged. Added the rule to `AGENTS.md`: a "commit and push" must wait for
+explicit acceptance of the latest `AGENT_FILES/HANDOFF.md` changes because
+`HANDOFF.md` is updated after every turn. No commit/push performed.
+
+### Current status
+
+- `AGENTS.md` updated with HANDOFF-acceptance rule.
+- `AGENT_FILES/HANDOFF.md` now has uncommitted log entries.
 - This `HANDOFF.md` now serves as the live session transcript.
 
 ## Previous sessions
