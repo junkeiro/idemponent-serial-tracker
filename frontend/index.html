@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serial Tracker</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 20px; }
+    h1 { font-size: 1.4rem; }
+    .section { margin-top: 20px; }
+    .done { color: green; }
+    .missing { color: red; }
+    .rejected { background: #fee; padding: 6px; margin: 4px 0; border-radius: 4px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+    th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
+    input { padding: 6px; width: 240px; }
+    button { padding: 6px 12px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script>
+    const { createElement: h, useState, useEffect } = React;
+
+    function Milestone({ name, reached }) {
+      return h("li", { className: reached ? "done" : "missing" },
+        reached ? "✓ " : "✗ ",
+        name
+      );
+    }
+
+    function SerialDetail() {
+      const [serialId, setSerialId] = useState("S-1");
+      const [data, setData] = useState(null);
+      const [error, setError] = useState(null);
+
+      const load = () => {
+        setError(null);
+        setData(null);
+        fetch(`/serials/${encodeURIComponent(serialId)}`)
+          .then(r => {
+            if (!r.ok) throw new Error(r.status === 404 ? "Serial not found" : "Error loading serial");
+            return r.json();
+          })
+          .then(setData)
+          .catch(e => setError(e.message));
+      };
+
+      useEffect(load, []);
+
+      const reached = new Set();
+      if (data) {
+        data.history.forEach(ev => {
+          if (ev.state === "Created" || ev.state === "Created (Commissioned)") reached.add("Created");
+          if (["Received", "PACKING", "Shipped"].includes(ev.state)) reached.add(ev.state);
+        });
+      }
+
+      return h("div", null,
+        h("h1", null, "Serial Tracker"),
+        h("div", null,
+          h("input", { value: serialId, onChange: e => setSerialId(e.target.value), placeholder: "Serial ID" }),
+          h("button", { onClick: load }, "Load")
+        ),
+        error && h("p", { style: { color: "red" } }, error),
+        data && h("div", null,
+          h("div", { className: "section" },
+            h("strong", null, "Current state: "),
+            data.current_state
+          ),
+          h("div", { className: "section" },
+            h("strong", null, "Attributes: "),
+            h("pre", null, JSON.stringify(data.attrs, null, 2))
+          ),
+          h("div", { className: "section" },
+            h("strong", null, "Milestones"),
+            h("ul", null,
+              ["Created", "Received", "PACKING", "Shipped"].map(m =>
+                h(Milestone, { key: m, name: m, reached: reached.has(m) })
+              )
+            )
+          ),
+          h("div", { className: "section" },
+            h("strong", null, "Accepted history"),
+            h("table", null,
+              h("thead", null, h("tr", null, h("th", null, "Time"), h("th", null, "State"), h("th", null, "Event ID"))),
+              h("tbody", null,
+                data.history.map(ev => h("tr", { key: ev.event_id },
+                  h("td", null, ev.event_time),
+                  h("td", null, ev.state),
+                  h("td", null, ev.event_id)
+                ))
+              )
+            )
+          ),
+          data.rejected_events.length > 0 && h("div", { className: "section" },
+            h("strong", null, "Rejected events"),
+            data.rejected_events.map(ev => h("div", { key: ev.event_id, className: "rejected" },
+              h("div", null, `${ev.event_time} — ${ev.state} (${ev.event_id})`),
+              h("div", null, ev.reason)
+            ))
+          )
+        )
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(h(SerialDetail));
+  </script>
+</body>
+</html>
