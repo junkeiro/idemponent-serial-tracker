@@ -42,15 +42,19 @@ The detail view is served at `http://127.0.0.1:8000/`. API endpoints are `POST
 
 ---
 
-## Coverage (optional)
+## Coverage
 
-To see actual code coverage of `tracker.py` and `app.py`:
+Run tests with coverage:
 
 ```bash
-DATABASE_URL=:memory: .venv/bin/pytest --cov=tracker --cov=app
+DATABASE_URL=:memory: .venv/bin/pytest --cov=tracker --cov=app --cov-report=term-missing --cov-report=html
 ```
 
-This reports 100% line coverage for both files.
+The terminal output shows per-file percentages and missing lines. An HTML
+report is generated in `htmlcov/index.html` — open it in a browser to see the
+full annotated coverage view.
+
+Current coverage: **100%** of `tracker.py` and `app.py`.
 
 ## Acceptance criteria → tests
 
@@ -69,19 +73,6 @@ This reports 100% line coverage for both files.
 | AC7 run/seed/test commands | this README | verified by running the listed commands |
 | AC8 scale/index answer | this README | "Scale question" section |
 
-## Coverage
-
-Run tests with coverage:
-
-```bash
-DATABASE_URL=:memory: .venv/bin/pytest --cov=tracker --cov=app --cov-report=term-missing --cov-report=html
-```
-
-The terminal output shows per-file percentages and missing lines. An HTML
-report is generated in `htmlcov/index.html` — open it in a browser to see the
-full annotated coverage view.
-
-Current coverage: **100%** of `tracker.py` and `app.py`.
 
 ## How R1–R5 are enforced
 
@@ -192,3 +183,14 @@ millions of rows is an O(n) full scan and must be refused.
 - Docker / docker compose.
 - Real paginated search endpoint; only the design is in this README.
 - CI pipeline.
+
+## Project agent files
+
+These files support the AI/IDE workflow for this repository:
+
+- `AGENTS.md` — project-level agent entry point and behaviour rules.
+- `AGENT_FILES/TASKS.md` — task list, build order, and AC grading checklist.
+- `AGENT_FILES/HANDOFF.md` — session transcript and handoff log (full
+  prompt/response history).
+- `AGENT_FILES/MEMORY.md` — project-specific decisions, constraints, and
+  discoveries.

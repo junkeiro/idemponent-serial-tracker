@@ -483,6 +483,25 @@ To https://github.com/junkeiro/idemponent-serial-tracker.git
 
 - All commits pushed to `origin/main`.
 - Exercise complete; work entered post-timebox (after 60 minutes).
+---
+
+**Prompt 28** — *2026-09-01 15:04:40 CST, elapsed ~67 min*
+> I have updated the README file, so consider my changes as a valid change. Now
+> please add in the LLM brief file that for the full history of prompts, they can
+> see the handle file and put the path for that file. Also explain in the readme
+> file at the bottom the hierarchy of the agents files that includes the handle
+> memory and tasks, as well as the agents file.
+
+**Response 28** — *2026-09-01 15:05:15 CST, elapsed ~67 min; AI: SWE-1.7 Medium (Devin)*
+Updated `LLM-BRIEF.md` with a "Full prompt/response history" section pointing to
+`AGENT_FILES/HANDOFF.md`. Added a "Project agent files" section at the bottom of
+`README.md` describing `AGENTS.md`, `AGENT_FILES/TASKS.md`,
+`AGENT_FILES/HANDOFF.md`, and `AGENT_FILES/MEMORY.md`.
+
+### Current status
+
+- `README.md` and `LLM-BRIEF.md` updated with requested cross-references.
+- Working tree has uncommitted changes.
 - This `HANDOFF.md` now serves as the live session transcript.
 
 ## Previous sessions

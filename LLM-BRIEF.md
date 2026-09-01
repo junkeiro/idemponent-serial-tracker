@@ -71,3 +71,12 @@ eight acceptance criteria were addressed:
 Code coverage is 100% on `tracker.py` and `app.py`. The project was split into a
 first commit containing the code/tests/app/frontend/seed/README and a second
 commit containing the AI/agent files (`AGENTS.md`, `AGENT_FILES/`, `LLM-BRIEF.md`).
+
+## Full prompt/response history
+
+This `LLM-BRIEF.md` is a high-level summary. The complete, timestamped,
+prompt-by-prompt transcript of the session lives in:
+
+```
+AGENT_FILES/HANDOFF.md
+```
